@@ -30,7 +30,7 @@ body {
 
 .signup {
   height: 95vh;
-  background-image: url(/img/signup.jpg);
+  background-image: url(./img/signup.jpg);
   background-size: cover;
   background-position: top;
   position: relative;
