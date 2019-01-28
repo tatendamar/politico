@@ -29,7 +29,7 @@ body {
 
 .login {
   height: 95vh;
-  background-image: url(/img/login.jpg);
+  background-image: url(./img/login.jpg);
   background-size: cover;
   background-position: bottom;
   position: relative;
