@@ -1,0 +1,275 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* Root Font Size Calculation */
+/* Inital Font Size from root is 16px and my personal font size for my project is 10px  */
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  /* font-size: 16px; */
+  line-height: 1.7;
+  color: #777;
+  padding: 2rem;
+
+  box-sizing: border-box;
+}
+
+.account {
+  height: 95vh;
+  padding: 5rem 4rem;
+  background-image: linear-gradient(
+    to right bottom,
+    rgba(190, 235, 159, 0.801),
+    rgba(121, 189, 159, 0.808)
+  );
+}
+
+.account__section {
+  background-image: url(./img/register.jpg);
+  background-size: cover;
+  background-position: bottom;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+
+  height: 57rem;
+  position: relative;
+}
+
+.form__column {
+  padding: 4rem 6rem;
+  margin-left: 16rem;
+  width: 80%;
+}
+
+.profile__img {
+  width: 20rem;
+  height: 20rem;
+  margin-left: 30rem;
+  margin-bottom: 3rem;
+
+  -webkit-clip-path: circle(50% at 50% 50%);
+  clip-path: circle(50% at 50% 50%);
+}
+
+.profile__img--style {
+  width: 100%;
+}
+/* Clear floats after the columns */
+.inner__row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.account__heading {
+  margin-left: -15rem;
+  font-size: 2rem;
+  margin-bottom: 6rem;
+}
+
+.account__text {
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  margin-left: 30rem;
+}
+
+.acc__accordion {
+  background-color: #8fb7a5;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid white;
+  margin-left: 9rem;
+  transition: 0.4s;
+  font-size: 2rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.acc__panel {
+  padding: 0 1.8rem;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+  margin-left: -4rem;
+}
+
+.acc__text {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  font-family: inherit;
+}
+
+.active,
+.acc__accordion:hover {
+  background-color: #527e6a;
+}
+
+.acc__accordion:after {
+  content: '\02795';
+  font-size: 1.5rem;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: '\2796';
+}
+
+@media screen and (min-width: 360px) {
+  .account {
+    width: 100%;
+    height: 89rem;
+  }
+
+  .profile__img {
+    width: 15rem;
+    height: 15rem;
+    margin-left: -11rem;
+
+    margin-bottom: 3rem;
+
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+  }
+
+  .form__column {
+    padding: 4rem 6rem;
+    margin-left: 10rem;
+    width: 80%;
+  }
+
+  .account__section {
+    width: 100%;
+    height: 104%;
+  }
+
+  .acc__accordion {
+    margin-left: -14.5rem;
+    width: 265%;
+  }
+
+  .acc__panel {
+    width: 100%;
+    padding-top: 2px;
+    margin-left: -15rem;
+  }
+
+  .account__heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .account__text {
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    margin-left: -14rem;
+  }
+}
+
+@media screen and (min-width: 548px) {
+  .account {
+    width: 100%;
+    height: 100rem;
+  }
+
+  .account__section {
+    width: 100%;
+    height: 104%;
+  }
+
+  .profile__img {
+    width: 20rem;
+    height: 20rem;
+    margin-left: -6rem;
+
+    margin-bottom: 3rem;
+
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+  }
+
+  .acc__accordion {
+    width: 150%;
+    margin-left: -10rem;
+  }
+
+  .acc__panel {
+    width: 100%;
+    padding-top: 2px;
+    margin-left: -10rem;
+  }
+
+  .account__heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .account__text {
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    margin-left: -9rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .account {
+    width: 100%;
+    height: 100rem;
+  }
+
+  .profile__img {
+    width: 20rem;
+    height: 20rem;
+    margin-left: 26rem;
+
+    margin-bottom: 3rem;
+
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+  }
+  .account__section {
+    width: 100%;
+    height: 104%;
+  }
+
+  .acc__accordion {
+    width: 102%;
+  }
+
+  .acc__panel {
+    width: 100%;
+    padding-top: 2px;
+    margin-left: -10rem;
+  }
+
+  .account__heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .account__text {
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    margin-left: -9rem;
+  }
+}
