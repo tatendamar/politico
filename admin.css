@@ -94,6 +94,11 @@ body {
   border-bottom: 3px solid #79bd8f;
 }
 
+.form__input--file {
+  margin-bottom: 5rem;
+  color: #4caf50;
+}
+
 ::-webkit-input-placeholder {
   color: rgb(14, 15, 15);
   opacity: 0.8;
