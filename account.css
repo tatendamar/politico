@@ -35,7 +35,7 @@ body {
 }
 
 .account__section {
-  background-image: url(./img/register.jpg);
+  background-color: #fff;
   background-size: cover;
   background-position: bottom;
   border-radius: 3px;
@@ -43,12 +43,6 @@ body {
 
   height: 57rem;
   position: relative;
-}
-
-.form__column {
-  padding: 4rem 6rem;
-  float: left;
-  width: 50%;
 }
 
 /* Clear floats after the columns */
@@ -59,7 +53,8 @@ body {
 }
 
 .account__heading {
-  text-align: center;
+  text-align: left;
+  margin-left: 5rem;
   font-size: 2rem;
 }
 .account__text {
@@ -108,6 +103,16 @@ body {
 
 .active:after {
   content: '\2796';
+}
+
+.form {
+  margin-left: 45rem;
+}
+
+.form__column {
+  padding: 5rem 8rem;
+  /* float: left; */
+  width: 70%;
 }
 
 .form__group:not(:last-child) {
@@ -168,7 +173,7 @@ body {
   color: white;
   padding: 1rem 4rem;
   cursor: pointer;
-  float: left;
+  margin-right: 30rem;
   border: none;
 
   transition: all 0.2s;
@@ -196,7 +201,7 @@ body {
 .btn--view {
   background-color: #d3d61b;
   margin-top: 7rem;
-  margin-left: 6rem;
+  margin-left: 2rem;
 
   outline: none;
 }
@@ -213,7 +218,13 @@ body {
   }
 
   .form__column {
-    width: 123%;
+    width: 140%;
+    margin-left: -3rem;
+  }
+
+  .form__group {
+    margin-top: 1rem;
+    margin-left: 5rem;
   }
 
   .account__section {
@@ -258,8 +269,12 @@ body {
     height: 100rem;
   }
 
+  .form {
+    margin-left: 13rem;
+  }
+
   .form__column {
-    width: 100%;
+    width: 106%;
   }
 
   .account__section {
@@ -278,7 +293,7 @@ body {
 
   .btn--view {
     padding: 1rem 1rem;
-    margin-left: 58px;
+    margin-left: 16.3rem;
   }
 
   .register__text {
@@ -298,6 +313,10 @@ body {
     height: 100rem;
   }
 
+  .form {
+    margin-left: 31;
+  }
+
   .form__column {
     width: 100%;
   }
@@ -318,7 +337,7 @@ body {
 
   .btn--view {
     padding: 1rem 1rem;
-    margin-left: 58px;
+    margin-left: 30.2rem;
   }
 
   .register__text {
