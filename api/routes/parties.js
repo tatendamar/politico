@@ -39,43 +39,43 @@ app.get('/parties', (req, res, next) => {
 app.get('/parties/:partyId', (req, res, next) => {
   const id = req.params.partyId;
 
-  // let found = party['data'].find(party => {
-  //   return party.id === parseInt(id);
-  // });
+  let found = party['data'].find(party => {
+    return party.id === parseInt(id);
+  });
 
-  // if (found) {
-  //   return res.send({
+  if (found) {
+    return res.send({
+      status: party.status,
+      data: found
+    });
+  } else {
+    return res.send({
+      status: 404,
+      message: 'Not Found'
+    });
+  }
+  //   let found = false;
+
+  //   let foundParty = party['data'].filter(item => {
+  //     parseInt(item.id) === id;
+  //   });
+
+  //   res.send({
   //     status: party.status,
-  //     data: found
+  //     data: party.data.map(col =>
+  //       col.id === parseInt(id)
+  //         ? {
+  //             id: col.id,
+  //             name: col.name,
+  //             address: col.address,
+  //             email: col.email,
+  //             city: col.city,
+  //             logo: col.logo
+  //             // dateCreated: col.dateCreated
+  //           }
+  //         : null
+  //     )
   //   });
-  // } else {
-  //   return res.send({
-  //     status: 404,
-  //     message: 'Not Found'
-  //   });
-  // }
-  let found = false;
-
-  let foundParty = party['data'].filter(item => {
-    parseInt(item.id) === id;
-  });
-
-  res.send({
-    status: party.status,
-    data: party.data.map(col =>
-      col.id === parseInt(id)
-        ? {
-            id: col.id,
-            name: col.name,
-            address: col.address,
-            email: col.email,
-            city: col.city,
-            logo: col.logo
-            // dateCreated: col.dateCreated
-          }
-        : null
-    )
-  });
 });
 
 //post parties
