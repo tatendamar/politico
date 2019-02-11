@@ -39,12 +39,25 @@ app.get('/parties', (req, res, next) => {
 app.get('/parties/:partyId', (req, res, next) => {
   const id = req.params.partyId;
 
+  // let found = party['data'].find(party => {
+  //   return party.id === parseInt(id);
+  // });
+
+  // if (found) {
+  //   return res.send({
+  //     status: party.status,
+  //     data: found
+  //   });
+  // } else {
+  //   return res.send({
+  //     status: 404,
+  //     message: 'Not Found'
+  //   });
+  // }
   let found = false;
 
-  party['data'].forEach((party, index, array) => {
-    if (!found && party.id === parseInt(id)) {
-      array.slice(0, index);
-    }
+  let foundParty = party['data'].filter(item => {
+    parseInt(item.id) === id;
   });
 
   res.send({
@@ -60,7 +73,7 @@ app.get('/parties/:partyId', (req, res, next) => {
             logo: col.logo
             // dateCreated: col.dateCreated
           }
-        : 'Not Found'
+        : null
     )
   });
 });
@@ -108,21 +121,64 @@ app.put('/parties/:partyId', (req, res, next) => {
   const id = req.params.partyId;
   let newName = req.body.name;
 
-  let found = false;
-
-  party['data'].forEach((party, index) => {
-    if (!found && party.id === parseInt(id)) {
-      party.name = newName;
-    }
+  let found = party['data'].find(party => {
+    return party.id === parseInt(id);
   });
 
-  res.send({
-    status: party.status,
-    data: party.data.map(col =>
-      col.id === parseInt(id) ? { id: col.id, name: col.name } : 'Not Found'
-    )
-  });
+  if (found) {
+    found.name = newName;
+    return res.send({
+      status: party.status,
+      data: found
+    });
+  } else {
+    return res.send({
+      status: 404,
+      message: 'Not Found'
+    });
+  }
 });
+// let found = false;
+
+// let foundParty = party['data'].filter(item => {
+//   if (item.id === parseInt(id)) {
+//     party.name = newName;
+//   }
+
+//   if (item.id !== parseInt(id)) {
+//     return res.send({
+//       status: 404,
+//       message: 'Not Found'
+//     });
+//   }
+// });
+
+//else if (item.id === parseInt(id)) {
+
+// res.send({
+//   status: party.status,
+//   data: party.data.map(col =>
+//     col.id === parseInt(id) ? { id: col.id, name: col.name } : 'Not Found'
+//   )
+// });
+
+// });
+
+//console.log('Partyyyyyy', foundParty);
+
+// party['data'].forEach((party, index) => {
+//   if (party.id === parseInt(id)) {
+//     party.name = newName;
+//   }
+
+//   // If party doesn't exist
+//   // return res.send({
+//   //   status:404,
+//   //   message: 'Not Found'
+//   //   )
+//   // });
+// });
+//});
 
 //delete parties
 app.delete('/parties/:partyId', (req, res, next) => {

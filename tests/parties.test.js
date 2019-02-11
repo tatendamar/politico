@@ -16,6 +16,16 @@ describe('Parties API Integration Tests', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.a('object');
+          res.body.should.have.property('party');
+          res.body.party.should.be.a('object');
+          res.body.party.should.have.property('data');
+
+          res.body.data.should.have.property('name');
+          res.body.data.should.have.property('address');
+          res.body.data.should.have.property('email');
+          res.body.data.should.have.property('logo');
+          res.body.data.should.have.property('city');
+
           done();
         });
     });
@@ -28,6 +38,15 @@ describe('Parties API Integration Tests', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
+          res.body.should.have.property('data');
+          res.body.data.should.be.a('object');
+          res.body.data.should.have.property('id');
+          res.body.data.should.have.property('name');
+          res.body.data.should.have.property('address');
+          res.body.data.should.have.property('email');
+          res.body.data.should.have.property('logo');
+          res.body.data.should.have.property('city');
+
           done();
         });
     });
@@ -50,31 +69,19 @@ describe('Parties API Integration Tests', () => {
   describe('/PUT party', () => {
     it('should EDIT a party with name field', done => {
       const id = 1;
-
-      let options = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
       chai
         .request(serverParty)
         .put(`/parties/${id}`)
-        //.set('Content-Type', 'application/json')
+
         .send({
-          // status: 201,
-          id: 1,
+          id: id,
           name: 'Rexford'
         })
-
-        .then(res => {
-          expect(res).to.have.status(201);
-          expect(res).to.be.a('object');
-          expect(res).to.have.property('name');
+        .end((err, res) => {
+          if (err) done(err);
+          res.body.should.be.a('object');
         });
-
       done();
-
-      //});
     });
   });
 });
