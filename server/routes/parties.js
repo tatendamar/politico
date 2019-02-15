@@ -1,5 +1,5 @@
-const app = require('express')();
 import parties from '../controllers/parties';
+const app = require('express')();
 
 app
   .route('/parties')
