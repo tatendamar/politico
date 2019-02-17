@@ -9,6 +9,30 @@ const pool = new Pool({
   connect: process.env.DATABASE_URL
 });
 
+const postParty = (req, res) => {
+  const { name, address, email, city, logo } = req.body;
+
+  pool.query(
+    'INSERT INTO parties(id,name,address,email,city,logo,created_date,modified_date) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',
+    [
+      uuidv4(),
+      name,
+      address,
+      email,
+      city,
+      logo,
+      moment(new Date()),
+      moment(new Date())
+    ],
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+      res.status(201).send(results);
+    }
+  );
+};
+
 const getParties = (req, res) => {
   pool.query('SELECT * FROM parties', (err, parties) => {
     if (err) {
@@ -123,4 +147,4 @@ const getParties = (req, res) => {
 //         });
 //     });
 // };
-export default { getParties };
+export default { postParty, getParties };
