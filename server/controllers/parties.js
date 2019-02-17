@@ -1,105 +1,126 @@
-import knex from '../models/knex';
-import validateParty from '../helpers/validateParty';
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+import uuidv4 from 'uuid/v4';
+import moment from 'moment';
 
-//get Perties
+dotenv.config();
+
+const pool = new Pool({
+  connect: process.env.DATABASE_URL
+});
+
 const getParties = (req, res) => {
-  knex
-    .select()
-    .from('parties')
-    .then(parties => {
-      res.send({
-        status: 200,
-        data: parties
-      });
+  pool.query('SELECT * FROM parties', (err, parties) => {
+    if (err) {
+      throw err;
+    }
+    res.send({
+      status: 200,
+      data: parties.rows
     });
+  });
 };
+// import knex from '../models/knex';
+// import validateParty from '../helpers/validateParty';
 
-//get a single party
-const getParty = (req, res) => {
-  const id = req.params.partyId;
+// //get Perties
+// const getParties = (req, res) => {
+//   knex
+//     .select()
+//     .from('parties')
+//     .then(parties => {
+//       res.send({
+//         status: 200,
+//         data: parties
+//       });
+//     });
+// };
 
-  knex
-    .select()
-    .from('parties')
-    .where('id', id)
-    .then(party => {
-      let found = party.find(party => {
-        return party.id === parseInt(id);
-      });
-      if (found) {
-        res.send({
-          status: 200,
-          data: found
-        });
-      } else {
-        return res.send({
-          status: 404,
-          message: 'Invalid party ID'
-        });
-      }
-    });
-};
+// //get a single party
+// const getParty = (req, res) => {
+//   const id = req.params.partyId;
 
-//post party
-const postParty = (req, res) => {
-  const { name, address, email, city, logo } = req.body;
+//   knex
+//     .select()
+//     .from('parties')
+//     .where('id', id)
+//     .then(party => {
+//       let found = party.find(party => {
+//         return party.id === parseInt(id);
+//       });
+//       if (found) {
+//         res.send({
+//           status: 200,
+//           data: found
+//         });
+//       } else {
+//         return res.send({
+//           status: 404,
+//           message: 'Invalid party ID'
+//         });
+//       }
+//     });
+// };
 
-  const err = validateParty(req.body);
-  //console.log('JOI Error is', err);
+// //post party
+// const postParty = (req, res) => {
+//   const { name, address, email, city, logo } = req.body;
 
-  const error = err['error'].details.map(msg => msg.message);
+//   const err = validateParty(req.body);
+//   //console.log('JOI Error is', err);
 
-  knex('parties')
-    .insert({
-      id: 6,
-      name: name,
-      email: email,
-      address: address,
-      city: city,
-      logo: logo
-    })
-    .then(party => {
-      if (!name || !email || !address || !city || !logo) {
-        return res.send({
-          status: 400,
-          error: error
-        });
-      }
-      res.send(party);
-    });
-};
+//   const error = err['error'].details.map(msg => msg.message);
 
-const editParty = (req, res) => {
-  const id = req.params.partyId;
-  const name = req.body.name;
+//   knex('parties')
+//     .insert({
+//       id: 6,
+//       name: name,
+//       email: email,
+//       address: address,
+//       city: city,
+//       logo: logo
+//     })
+//     .then(party => {
+//       if (!name || !email || !address || !city || !logo) {
+//         return res.send({
+//           status: 400,
+//           error: error
+//         });
+//       }
+//       res.send(party);
+//     });
+// };
 
-  knex('parties')
-    .where('id', id)
-    .update({
-      name: name
-    })
-    .then(() => {
-      knex
-        .select()
-        .from('parties')
-        .where('id', id)
-        .then(party => {
-          let found = party.find(party => {
-            return party.id === parseInt(id);
-          });
-          if (found) {
-            res.send({
-              status: 200,
-              data: found
-            });
-          } else {
-            return res.send({
-              status: 404,
-              message: 'Invalid party ID'
-            });
-          }
-        });
-    });
-};
+// const editParty = (req, res) => {
+//   const id = req.params.partyId;
+//   const name = req.body.name;
 
-export default { getParties, getParty, postParty, editParty };
+//   knex('parties')
+//     .where('id', id)
+//     .update({
+//       name: name
+//     })
+//     .then(() => {
+//       knex
+//         .select()
+//         .from('parties')
+//         .where('id', id)
+//         .then(party => {
+//           let found = party.find(party => {
+//             return party.id === parseInt(id);
+//           });
+//           if (found) {
+//             res.send({
+//               status: 200,
+//               data: found
+//             });
+//           } else {
+//             return res.send({
+//               status: 404,
+//               message: 'Invalid party ID'
+//             });
+//           }
+//         });
+//     });
+// };
+export default { getParties };
