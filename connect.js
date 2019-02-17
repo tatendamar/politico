@@ -25,8 +25,18 @@ const createTables = () => {
      modified_date TIMESTAMP
 )`;
 
+  const queryOfficies = `CREATE TABLE IF NOT EXISTS
+     officies(
+       id UUID PRIMARY KEY,
+       name VARCHAR(128) NOT NULL,
+       type VARCHAR(128) NOT NULL,
+       created_date TIMESTAMP,
+       modified_date TIMESTAMP
+     )
+ `;
+
   pool
-    .query(queryParties)
+    .query(queryParties, queryOfficies)
     .then(res => {
       console.log(res);
       pool.end();
@@ -39,8 +49,9 @@ const createTables = () => {
 
 const dropTables = () => {
   const queryParties = 'DROP TABLE IF EXISTS parties';
+  const queryOfficies = 'DROP TABLE IF EXISTS parties';
   pool
-    .query(queryParties)
+    .query(queryParties, queryOfficies)
     .then(res => {
       console.log(res);
       pool.end();
