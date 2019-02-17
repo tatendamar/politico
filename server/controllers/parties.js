@@ -28,4 +28,6 @@ const getParty = (req, res) => {
     });
 };
 
+//post party
+
 export default { getParties, getParty };
