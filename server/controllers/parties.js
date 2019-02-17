@@ -69,4 +69,56 @@ const postParty = (req, res) => {
     });
 };
 
-export default { getParties, getParty, postParty };
+const editParty = (req, res) => {
+  const id = req.params.partyId;
+  const name = req.body.name;
+
+  knex('parties')
+    .where('id', id)
+    .update({
+      name: name
+    })
+    .then(() => {
+      knex
+        .select()
+        .from('parties')
+        .where('id', id)
+        .then(party => {
+          let found = party.find(party => {
+            return party.id === parseInt(id);
+          });
+          if (found) {
+            res.send({
+              status: 200,
+              data: found
+            });
+          } else {
+            return res.send({
+              status: 404,
+              message: 'Invalid party ID'
+            });
+          }
+        });
+    });
+};
+
+const deleteParty = (req, res) => {
+  const id = req.params.partyId;
+  knex('parties')
+    .where('id', id)
+    .del()
+    .then(() => {
+      knex
+        .select()
+        .from('parties')
+        .where('id', id)
+        .then(() => {
+          res.send({
+            status: 200,
+            message: 'party delete successfully'
+          });
+        });
+    });
+};
+
+export default { getParties, getParty, postParty, editParty, deleteParty };
