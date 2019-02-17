@@ -102,4 +102,23 @@ const editParty = (req, res) => {
     });
 };
 
-export default { getParties, getParty, postParty, editParty };
+const deleteParty = (req, res) => {
+  const id = req.params.partyId;
+  knex('parties')
+    .where('id', id)
+    .del()
+    .then(() => {
+      knex
+        .select()
+        .from('parties')
+        .where('id', id)
+        .then(() => {
+          res.send({
+            status: 200,
+            message: 'party delete successfully'
+          });
+        });
+    });
+};
+
+export default { getParties, getParty, postParty, editParty, deleteParty };
