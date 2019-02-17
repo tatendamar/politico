@@ -1,7 +1,7 @@
 import office from '../models/officies';
 import validateOffice from '../helpers/validateOffice';
 
-let currentId = 2;
+let currentId = office['data'].length;
 
 //get parties
 const getOfficies = (req, res) => {
@@ -50,7 +50,7 @@ const postOffice = (req, res) => {
     console.log(i);
   }
   console.log(error);
-  if (!name || !email) {
+  if (!name || !type) {
     return res.send({
       status: 400,
       error: error

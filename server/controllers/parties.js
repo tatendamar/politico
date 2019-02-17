@@ -2,7 +2,7 @@ import validateParty from '../helpers/validateParty';
 //import check from 'express-validator/check';
 import party from '../models/parties';
 
-let currentId = 2;
+let currentId = party['data'].length;
 
 //get parties
 const getParties = (req, res) => {
@@ -53,7 +53,7 @@ const postParty = (req, res) => {
     console.log(i);
   }
   console.log(error);
-  if (!name || !email) {
+  if (!name || !email || !address || !city || !logo) {
     return res.send({
       status: 400,
       error: error
