@@ -57,6 +57,7 @@ const getParty = (req, res) => {
         data: found
       });
     } else {
+      //FIXME: failiing to return error object
       return res.send({
         status: 404,
         message: 'Invalid party ID'
