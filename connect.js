@@ -13,30 +13,17 @@ pool.on('connect', () => {
 });
 
 const createTables = () => {
-  const queryParties = `CREATE TABLE IF NOT EXISTS
+  const queryOfficies = `CREATE TABLE IF NOT EXISTS
 
-   parties(
+   officies(
      id UUID PRIMARY KEY,
      name VARCHAR(128) NOT NULL,
-     email VARCHAR(128) NOT NULL,
-     address CHAR(50)   NOT NULL,
-     city  VARCHAR(128) NOT NULL,
-     created_date TIMESTAMP,
-     modified_date TIMESTAMP
+     type VARCHAR(128) NOT NULL,
+    
 )`;
 
-  const queryOfficies = `CREATE TABLE IF NOT EXISTS
-     officies(
-       id UUID PRIMARY KEY,
-       name VARCHAR(128) NOT NULL,
-       type VARCHAR(128) NOT NULL,
-       created_date TIMESTAMP,
-       modified_date TIMESTAMP
-     )
- `;
-
   pool
-    .query(queryParties, queryOfficies)
+    .query(queryOfficies)
     .then(res => {
       console.log(res);
       pool.end();
@@ -48,10 +35,9 @@ const createTables = () => {
 };
 
 const dropTables = () => {
-  const queryParties = 'DROP TABLE IF EXISTS parties';
   const queryOfficies = 'DROP TABLE IF EXISTS parties';
   pool
-    .query(queryParties, queryOfficies)
+    .query(queryOfficies)
     .then(res => {
       console.log(res);
       pool.end();
