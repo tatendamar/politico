@@ -1,121 +1,170 @@
-import validateParty from '../helpers/validateParty';
-//import check from 'express-validator/check';
-import party from '../models/parties';
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+import uuidv4 from 'uuid/v4';
+import moment from 'moment';
 
-let currentId = 2;
+dotenv.config();
 
-//get parties
-const getParties = (req, res) => {
-  res.send({ party });
-};
+const pool = new Pool({
+  connect: process.env.DATABASE_URL
+});
 
-//get a party by id
-const getParty = (req, res) => {
-  const id = req.params.partyId;
-  let found = party['data'].find(party => {
-    return party.id === parseInt(id);
-  });
-
-  if (found) {
-    return res.send({
-      status: party.status,
-      data: found
-    });
-  } else {
-    return res.send({
-      status: 404,
-      message: 'Not Found'
-    });
-  }
-};
-
-//post parties
 const postParty = (req, res) => {
   const { name, address, email, city, logo } = req.body;
 
-  //let data = req.body;
-  currentId++;
-
-  const newParty = {
-    id: currentId,
-    name: name,
-    email: email,
-    address: address,
-    city: city,
-    logo: logo
-  };
-
-  const err = validateParty(req.body);
-  console.log('JOI Error is', err['error'].details.map(n => console.log(n)));
-
-  let error = err['error'].details.map(n => n.message);
-  for (let i of error) {
-    console.log(i);
-  }
-  console.log(error);
-  if (!name || !email) {
-    return res.send({
-      status: 400,
-      error: error
-    });
-  }
-
-  party['data'].push(newParty);
-  res.send({
-    status: party.status,
-    data: [
-      {
-        id: newParty.id,
-        name: newParty.name,
-        email: newParty.email,
-        address: newParty.address,
-        city: newParty.city,
-        logo: newParty.logo
-        // dateCreated: day
+  pool.query(
+    'INSERT INTO parties(id,name,address,email,city,logo,created_date,modified_date) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',
+    [
+      uuidv4(),
+      name,
+      address,
+      email,
+      city,
+      logo,
+      moment(new Date()),
+      moment(new Date())
+    ],
+    (err, results) => {
+      if (err) {
+        throw err;
       }
-    ]
+      res.status(201).send(results);
+    }
+  );
+};
+
+const getParties = (req, res) => {
+  pool.query('SELECT * FROM parties', (err, parties) => {
+    if (err) {
+      throw err;
+    }
+    res.send({
+      status: 200,
+      data: parties.rows
+    });
   });
 };
 
-//edit parties
-const editParty = (req, res) => {
+const getParty = (req, res) => {
   const id = req.params.partyId;
-  let newName = req.body.name;
-
-  let found = party['data'].find(party => {
-    return party.id === parseInt(id);
-  });
-
-  if (found) {
-    found.name = newName;
-    return res.send({
-      status: party.status,
-      data: found
+  pool.query('SELECT * FROM parties WHERE id = $1', [id], (err, party) => {
+    let found = party.rows.find(party => {
+      return party.id !== parseInt(id);
     });
-  } else {
-    return res.send({
-      status: 404,
-      message: 'Not Found'
-    });
-  }
-};
-
-//delete parties
-const deleteParty = (req, res) => {
-  const id = req.params.partyId;
-
-  let found = false;
-
-  party['data'].forEach((party, index, array) => {
-    if (!found && party.id === parseInt(id)) {
-      array.splice(index, 1);
+    if (found) {
+      res.send({
+        status: 200,
+        data: found
+      });
+    } else {
+      return res.send({
+        status: 404,
+        message: 'Invalid party ID'
+      });
     }
   });
-
-  res.send({
-    status: party.status,
-    data: [{ maessage: 'party deleted successfully' }]
-  });
 };
+// import knex from '../models/knex';
+// import validateParty from '../helpers/validateParty';
 
-export default { getParties, getParty, postParty, editParty, deleteParty };
+// //get Perties
+// const getParties = (req, res) => {
+//   knex
+//     .select()
+//     .from('parties')
+//     .then(parties => {
+//       res.send({
+//         status: 200,
+//         data: parties
+//       });
+//     });
+// };
+
+// //get a single party
+// const getParty = (req, res) => {
+//   const id = req.params.partyId;
+
+//   knex
+//     .select()
+//     .from('parties')
+//     .where('id', id)
+//     .then(party => {
+//       let found = party.find(party => {
+//         return party.id === parseInt(id);
+//       });
+//       if (found) {
+//         res.send({
+//           status: 200,
+//           data: found
+//         });
+//       } else {
+//         return res.send({
+//           status: 404,
+//           message: 'Invalid party ID'
+//         });
+//       }
+//     });
+// };
+
+// //post party
+// const postParty = (req, res) => {
+//   const { name, address, email, city, logo } = req.body;
+
+//   const err = validateParty(req.body);
+//   //console.log('JOI Error is', err);
+
+//   const error = err['error'].details.map(msg => msg.message);
+
+//   knex('parties')
+//     .insert({
+//       id: 6,
+//       name: name,
+//       email: email,
+//       address: address,
+//       city: city,
+//       logo: logo
+//     })
+//     .then(party => {
+//       if (!name || !email || !address || !city || !logo) {
+//         return res.send({
+//           status: 400,
+//           error: error
+//         });
+//       }
+//       res.send(party);
+//     });
+// };
+
+// const editParty = (req, res) => {
+//   const id = req.params.partyId;
+//   const name = req.body.name;
+
+//   knex('parties')
+//     .where('id', id)
+//     .update({
+//       name: name
+//     })
+//     .then(() => {
+//       knex
+//         .select()
+//         .from('parties')
+//         .where('id', id)
+//         .then(party => {
+//           let found = party.find(party => {
+//             return party.id === parseInt(id);
+//           });
+//           if (found) {
+//             res.send({
+//               status: 200,
+//               data: found
+//             });
+//           } else {
+//             return res.send({
+//               status: 404,
+//               message: 'Invalid party ID'
+//             });
+//           }
+//         });
+//     });
+// };
+export default { postParty, getParties, getParty };
