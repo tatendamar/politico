@@ -1,3 +1,40 @@
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+import uuidv4 from 'uuid/v4';
+import moment from 'moment';
+
+dotenv.config();
+
+const pool = new Pool({
+  connect: process.env.DATABASE_URL
+});
+
+const postOffice = (req, res) => {
+  const { name, type } = req.body;
+
+  pool.query(
+    'INSERT INTO officies(id,name,type,created_date,modified_date) VALUES($1,$2,$3,$4,$5)',
+    [uuidv4(), name, type, moment(new Date()), moment(new Date())],
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+      res.status(201).send(results);
+    }
+  );
+};
+
+// const getOfficies = (req, res) => {
+//   pool.query('SELECT * FROM officies', (err, officies) => {
+//     if (err) {
+//       throw err;
+//     }
+//     res.send({
+//       status: 200,
+//       data: officies.rows
+//     });
+//   });
+// };
 // import office from '../models/officies';
 // import validateOffice from '../helpers/validateOffice';
 
@@ -70,4 +107,4 @@
 //   });
 // };
 
-// export default { getOfficies, getOffice, postOffice };
+export default { postOffice };
