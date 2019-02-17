@@ -1,8 +1,6 @@
 import parties from '../controllers/parties';
 const app = require('express')();
 
-const app = require('express')();
-
 app
   .route('/parties')
   .get(parties.getParties)

@@ -1,8 +1,6 @@
 import officies from '../controllers/officies';
 const app = require('express')();
 
-const app = require('express')();
-
 app
   .route('/officies')
   .get(officies.getOfficies)
