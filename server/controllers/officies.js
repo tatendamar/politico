@@ -24,17 +24,17 @@ const postOffice = (req, res) => {
   );
 };
 
-// const getOfficies = (req, res) => {
-//   pool.query('SELECT * FROM officies', (err, officies) => {
-//     if (err) {
-//       throw err;
-//     }
-//     res.send({
-//       status: 200,
-//       data: officies.rows
-//     });
-//   });
-// };
+const getOfficies = (req, res) => {
+  pool.query('SELECT * FROM officies', (err, officies) => {
+    if (err) {
+      throw err;
+    }
+    res.send({
+      status: 200,
+      data: officies.rows
+    });
+  });
+};
 // import office from '../models/officies';
 // import validateOffice from '../helpers/validateOffice';
 
@@ -107,4 +107,4 @@ const postOffice = (req, res) => {
 //   });
 // };
 
-export default { postOffice };
+export default { postOffice, getOfficies };

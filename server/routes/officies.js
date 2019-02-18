@@ -3,7 +3,7 @@ const app = require('express')();
 
 app
   .route('/officies')
-  //  .get(officies.getOfficies)
+  .get(officies.getOfficies)
   .post(officies.postOffice);
 //app.route('/officies/:officeId').get(officies.getOffice);
 
