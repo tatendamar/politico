@@ -349,7 +349,7 @@ body {
   ::-webkit-input-placeholder {
     color: rgb(183, 243, 243);
     opacity: 0.8;
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   .form__group {
