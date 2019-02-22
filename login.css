@@ -403,7 +403,14 @@ body {
   }
 
   .login__form--input {
+    height: 4rem;
     width: 69%;
+  }
+
+  ::-webkit-input-placeholder {
+    color: rgb(183, 243, 243);
+    opacity: 0.8;
+    font-size: 3rem;
   }
 
   .btn--login {
